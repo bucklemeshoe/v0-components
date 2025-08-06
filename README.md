@@ -11,7 +11,7 @@ This repository contains V0-generated components for the Rematch Padel platform.
 
 ## 🚀 Quick Start
 
-```bash
+\`\`\`bash
 # Install dependencies
 npm install
 
@@ -20,18 +20,18 @@ npm run storybook
 
 # Build Storybook for deployment
 npm run build-storybook
-```
+\`\`\`
 
 ## 📁 Structure
 
-```
+\`\`\`
 v0-components/
 ├── components/          # V0 generated components
 ├── stories/            # Storybook stories
 ├── src/               # Next.js app structure (for V0)
 ├── .storybook/        # Storybook configuration
 └── public/            # Static assets
-```
+\`\`\`
 
 ## 🎨 Components
 

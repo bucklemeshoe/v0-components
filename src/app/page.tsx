@@ -1,3 +1,5 @@
+import TournamentPlayerCard from '../../components/TournamentPlayerCard'
+
 export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50 py-8">
@@ -27,7 +29,13 @@ export default function Home() {
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6">
           <div className="bg-white rounded-lg shadow p-6">
             <h3 className="text-lg font-semibold mb-2">🏆 Tournament Player Card</h3>
-            <p className="text-gray-600">Player verification card with QR code</p>
+            <p className="text-gray-600 mb-4">Player verification card with QR code</p>
+            <a 
+              href="/tournament-card" 
+              className="inline-block bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700 transition-colors"
+            >
+              View Component →
+            </a>
           </div>
           
           <div className="bg-white rounded-lg shadow p-6">

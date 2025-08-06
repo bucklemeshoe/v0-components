@@ -1,3 +1,5 @@
+'use client'
+
 import Image from "next/image"
 import QRCode from 'qrcode'
 import { useEffect, useState } from 'react'
@@ -9,14 +11,13 @@ interface TournamentPlayerCardProps {
   profileImageUrl?: string
 }
 
-export default function TournamentPlayerCard({
-  playerName = 'Player Name',
-  clubName = 'Club Name',
-  playerId = 'player-id-123',
+function TournamentPlayerCard({
+  playerName = 'Pieter',
+  clubName = 'Epicentre',
+  playerId = '56d7f243...0be9f5e34c11',
   profileImageUrl = '/placeholder-user.jpg'
 }: TournamentPlayerCardProps) {
   const [qrCodeUrl, setQrCodeUrl] = useState('')
-  const [profileImageError, setProfileImageError] = useState(false)
 
   useEffect(() => {
     QRCode.toDataURL(playerId, {
@@ -36,7 +37,7 @@ export default function TournamentPlayerCard({
   return (
     <div className="flex justify-center min-h-screen bg-gray-100 p-4">
       {/* ID Card */}
-      <div className="w-[382px] h-[646px] bg-white rounded-lg shadow-lg overflow-hidden relative player-card-shadow">
+      <div className="w-[382px] h-[646px] bg-white rounded-lg shadow-lg overflow-hidden relative">
         {/* Lanyard hole - wider and 2px lower */}
         <div className="absolute top-6 left-1/2 transform -translate-x-1/2 w-12 h-4 bg-gray-100 rounded-sm border-2 border-gray-300 z-10"></div>
 
@@ -61,25 +62,11 @@ export default function TournamentPlayerCard({
           <div className="flex flex-col items-center py-12 px-4 flex-1 justify-center ml-6">
             {/* Profile image */}
             <div className="w-20 h-20 rounded-full overflow-hidden mb-6 border-2 border-gray-200">
-              {profileImageUrl && profileImageUrl !== '/placeholder-user.jpg' && !profileImageError ? (
-                <Image
-                  src={profileImageUrl || "/placeholder.svg"}
-                  alt={`${playerName} profile`}
-                  width={80}
-                  height={80}
-                  className="w-full h-full object-cover"
-                  onError={() => {
-                    // This will cause a re-render with the fallback
-                    setProfileImageError(true)
-                  }}
-                />
-              ) : (
-                <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
-                  <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
-                    <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
-                  </svg>
-                </div>
-              )}
+              <div className="w-full h-full bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center">
+                <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24">
+                  <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                </svg>
+              </div>
             </div>
 
             {/* Player name */}
@@ -113,6 +100,14 @@ export default function TournamentPlayerCard({
           </div>
         </div>
       </div>
+    </div>
+  )
+}
+
+export default function Page() {
+  return (
+    <div>
+      <TournamentPlayerCard />
     </div>
   )
 }
