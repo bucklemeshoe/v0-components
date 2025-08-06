@@ -1,58 +1,15 @@
-import type { Preview } from '@storybook/react'
-import '../src/app/globals.css'
+import '../src/app/globals.css';
 
-const preview: Preview = {
+const preview = {
   parameters: {
+    actions: { argTypesRegex: '^on[A-Z].*' },
     controls: {
       matchers: {
         color: /(background|color)$/i,
         date: /Date$/i,
       },
     },
-    backgrounds: {
-      default: 'light',
-      values: [
-        {
-          name: 'light',
-          value: '#ffffff',
-        },
-        {
-          name: 'dark',
-          value: '#0a0a0a',
-        },
-        {
-          name: 'padel-court',
-          value: '#f3f4f6',
-        },
-      ],
-    },
-    viewport: {
-      viewports: {
-        mobile: {
-          name: 'Mobile',
-          styles: {
-            width: '375px',
-            height: '667px',
-          },
-        },
-        tablet: {
-          name: 'Tablet',
-          styles: {
-            width: '768px',
-            height: '1024px',
-          },
-        },
-        desktop: {
-          name: 'Desktop',
-          styles: {
-            width: '1024px',
-            height: '768px',
-          },
-        },
-      },
-    },
   },
-  tags: ['autodocs'],
-}
+};
 
-export default preview
+export default preview;

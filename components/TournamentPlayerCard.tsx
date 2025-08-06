@@ -1,6 +1,6 @@
 import Image from "next/image"
 import QRCode from 'qrcode'
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useMemo } from 'react'
 
 interface TournamentPlayerCardProps {
   playerName?: string
@@ -17,8 +17,13 @@ export default function TournamentPlayerCard({
 }: TournamentPlayerCardProps) {
   const [qrCodeUrl, setQrCodeUrl] = useState('')
 
+  // Memoize the player ID to prevent unnecessary re-renders
+  const stablePlayerId = useMemo(() => playerId, [playerId])
+
   useEffect(() => {
-    QRCode.toDataURL(playerId, {
+    let isMounted = true
+    
+    QRCode.toDataURL(stablePlayerId, {
       width: 96,
       margin: 1,
       color: {
@@ -26,11 +31,19 @@ export default function TournamentPlayerCard({
         light: '#FFFFFF'
       }
     }).then(url => {
-      setQrCodeUrl(url)
+      if (isMounted) {
+        setQrCodeUrl(url)
+      }
     }).catch(err => {
-      console.error('QR Code generation error:', err)
+      if (isMounted) {
+        console.error('QR Code generation error:', err)
+      }
     })
-  }, [playerId])
+
+    return () => {
+      isMounted = false
+    }
+  }, [stablePlayerId])
 
   return (
     <div className="flex justify-center min-h-screen bg-gray-100 p-4">
@@ -89,11 +102,18 @@ export default function TournamentPlayerCard({
 
             {/* QR Code */}
             <div className="bg-white border border-gray-200 rounded p-3 shadow-sm mb-6">
-              <div className="w-24 h-24 bg-white flex items-center justify-center">
+              <div className="w-24 h-24 bg-white flex items-center justify-center relative">
                 {qrCodeUrl ? (
-                  <img src={qrCodeUrl} alt="Player QR Code" className="w-full h-full" />
+                  <img 
+                    src={qrCodeUrl} 
+                    alt="Player QR Code" 
+                    className="w-full h-full transition-opacity duration-200"
+                    style={{ opacity: qrCodeUrl ? 1 : 0 }}
+                  />
                 ) : (
-                  <div className="w-full h-full bg-gray-200 animate-pulse rounded"></div>
+                  <div className="w-full h-full bg-gray-200 flex items-center justify-center rounded">
+                    <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin"></div>
+                  </div>
                 )}
               </div>
               <p className="text-center text-xs text-gray-500 mt-2">Player ID</p>

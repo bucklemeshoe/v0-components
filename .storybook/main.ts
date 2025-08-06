@@ -1,15 +1,7 @@
-import type { StorybookConfig } from '@storybook/nextjs'
-
-const config: StorybookConfig = {
-  stories: [
-    '../stories/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../components/**/*.stories.@(js|jsx|mjs|ts|tsx)',
-    '../src/**/*.stories.@(js|jsx|mjs|ts|tsx)'
-  ],
+const config = {
+  stories: ['../stories/**/*.stories.@(js|jsx|ts|tsx)'],
   addons: [
-    '@storybook/addon-links',
     '@storybook/addon-essentials',
-    '@storybook/addon-interactions',
   ],
   framework: {
     name: '@storybook/nextjs',
@@ -18,15 +10,7 @@ const config: StorybookConfig = {
   staticDirs: ['../public'],
   typescript: {
     check: false,
-    reactDocgen: 'react-docgen-typescript',
-    reactDocgenTypescriptOptions: {
-      shouldExtractLiteralValuesFromEnum: true,
-      propFilter: (prop) => (prop.parent ? !/node_modules/.test(prop.parent.fileName) : true),
-    },
   },
-  docs: {
-    autodocs: 'tag',
-  },
-}
+};
 
-export default config
+export default config;
